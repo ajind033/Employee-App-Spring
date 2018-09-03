@@ -3,6 +3,8 @@ package com.ajind.demo.model;
 /**
  * View Model for Employee
  * 
+ * Frontend to backend
+ * 
  * @author Akash
  *
  */

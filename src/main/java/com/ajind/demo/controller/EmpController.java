@@ -23,9 +23,9 @@ import com.ajind.demo.service.EmpService;
  * @author Akash
  *
  */
-@RestController
-@CrossOrigin
-@RequestMapping("/Employee")
+@RestController								// @Controller + @Responsebody
+@CrossOrigin								// for allowing access-control-allow-origin
+@RequestMapping("/Employee")				// create a base url localhost/Employee
 public class EmpController {
 
 	@Autowired
@@ -47,7 +47,7 @@ public class EmpController {
 	 * POST new Employee
 	 */
 	@PostMapping("/saveEmp")
-	public EmpMV saveEmp(@RequestBody EmpVM empVM) {
+	public Object saveEmp(@RequestBody EmpVM empVM) {
 
 		log.info("in saveEmp of Controller");
 		return empService.saveEmp(empVM);

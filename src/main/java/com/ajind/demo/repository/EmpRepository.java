@@ -20,7 +20,7 @@ import com.ajind.demo.model.EmpVM;
  * @author Akash
  *
  */
-@Repository
+@Repository				//used for database manipulation
 public class EmpRepository {
 
 	private static Connection connection = null;
@@ -90,9 +90,8 @@ public class EmpRepository {
 		return employeeList;
 	}
 
-	public EmpMV saveEmp(EmpVM empVM) {
+	public Object saveEmp(EmpVM empVM) {
 
-		String response = null;
 		try {
 			Class.forName(JDBC_DRIVER);
 
@@ -111,8 +110,8 @@ public class EmpRepository {
 
 		} catch (SQLException se) {
 			// Handle errors for JDBC
-			response = se.getMessage();
 			se.printStackTrace();
+			return se.getMessage();
 		} catch (Exception e) {
 			// Handle errors for Class.forName
 			e.printStackTrace();

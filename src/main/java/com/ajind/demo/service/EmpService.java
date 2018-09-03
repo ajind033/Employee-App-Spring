@@ -15,5 +15,5 @@ public interface EmpService {
 
 	public ArrayList<EmpMV> getAllEmp();
 
-	public EmpMV saveEmp(EmpVM empVM);
+	public Object saveEmp(EmpVM empVM);
 }

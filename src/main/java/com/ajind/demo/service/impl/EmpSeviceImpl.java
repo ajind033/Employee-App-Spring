@@ -34,7 +34,7 @@ public class EmpSeviceImpl implements EmpService {
 	}
 
 	@Override
-	public EmpMV saveEmp(EmpVM empVM) {
+	public Object saveEmp(EmpVM empVM) {
 
 		log.info("In saveEmp of Service Impl");
 		return empRepository.saveEmp(empVM);
