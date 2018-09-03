@@ -2,6 +2,7 @@ package com.ajind.demo.repository;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -20,7 +21,8 @@ import com.ajind.demo.model.EmpVM;
  * @author Akash
  *
  */
-@Repository				//used for database manipulation
+
+@Repository													 // used for database manipulation
 public class EmpRepository {
 
 	private static Connection connection = null;
@@ -79,11 +81,18 @@ public class EmpRepository {
 
 			log.info("Closing the connection");
 			try {
-				statement.close();
-				connection.close();
+				if (statement != null) {
+					statement.close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
 			} catch (SQLException se) {
 				// TODO Auto-generated catch block
 				se.printStackTrace();
+			} catch (NullPointerException ne) {
+				// TODO Auto-generated catch block
+				ne.printStackTrace();
 			}
 		}
 		log.info("Goodbye!");
@@ -99,14 +108,20 @@ public class EmpRepository {
 			connection = DriverManager.getConnection(DB_URL, USER, PASS);
 
 			log.info("Creating statement...");
-			statement = connection.createStatement();
-			
-			log.info("Saving Data...");
-			String sql = " INSERT INTO employees ( empid,  fname ,lname,gender,contact,password) VALUES ( '"
-					+ empVM.getEmpId() + "', '" + empVM.getFname() + "','" + empVM.getLname() + "','"
-					+ empVM.getGender() + "','" + empVM.getContact() + "', '" + empVM.getPassword() + "' )";
 
-			int a = statement.executeUpdate(sql);
+			PreparedStatement statement = connection.prepareStatement(
+					" INSERT INTO employees ( empid,  fname ,lname,gender,contact,password) VALUES(?,?,?,?,?,?)");
+			statement.setString(1, empVM.getEmpId());
+			statement.setString(2, empVM.getFname());
+			statement.setString(3, empVM.getLname());
+			statement.setString(4, empVM.getGender());
+			statement.setString(5, empVM.getContact());
+			statement.setString(6, empVM.getPassword());
+
+			log.info("Saving Data...");
+
+			int i = statement.executeUpdate();
+			log.info(i + " record inserted");
 
 		} catch (SQLException se) {
 			// Handle errors for JDBC
@@ -119,15 +134,22 @@ public class EmpRepository {
 
 			log.info("Closing the connection");
 			try {
-				statement.close();
-				connection.close();
+				if (statement != null) {
+					statement.close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
 			} catch (SQLException se) {
 				// TODO Auto-generated catch block
 				se.printStackTrace();
+			} catch (NullPointerException ne) {
+				// TODO Auto-generated catch block
+				ne.printStackTrace();
 			}
 		}
 		log.info("Goodbye!");
-		EmpMV empMV= new EmpMV();
+		EmpMV empMV = new EmpMV();
 		empMV.setEmpId(empVM.getEmpId());
 		empMV.setFname(empVM.getFname());
 		empMV.setLname(empVM.getLname());
