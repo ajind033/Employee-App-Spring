@@ -110,7 +110,7 @@ public class EmpRepository {
 			log.info("Creating statement...");
 
 			PreparedStatement statement = connection.prepareStatement(
-					" INSERT INTO employees ( empid,  fname ,lname,gender,contact,password) VALUES(?,?,?,?,?,?)");
+					" INSERT INTO Employees ( empid,  fname ,lname,gender,contact,password) VALUES(?,?,?,?,?,?)");
 			statement.setString(1, empVM.getEmpId());
 			statement.setString(2, empVM.getFname());
 			statement.setString(3, empVM.getLname());
